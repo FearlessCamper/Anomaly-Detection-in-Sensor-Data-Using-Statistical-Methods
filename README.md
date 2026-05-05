@@ -25,3 +25,15 @@ For the project to run smoothly, you must have **Python 3.8 or higher** installe
 **Step 1:** Install the required libraries. Open your terminal or command prompt, navigate to the project directory, and run the following command:
 ```bash
 pip install -r requirements.txt
+```
+
+**Step 2:** Ensure that the Air Quality dataset CSV file (e.g., AirQualityUCI.csv) is located in the same directory as your Python script.
+(Note: Verify that the file name matches the one specified in the data loading section of the code.)
+
+**Step 3:** Run the project script:
+```bash
+python your_script_name.py
+```
+
+📊 Outputs
+When the script is executed, the terminal will display a step-by-step breakdown of the statistical test results, confidence intervals, and a detailed list of any detected anomalies. Additionally, a Q-Q Plot figure will pop up on your screen, allowing you to visually inspect the normality of the sensor data.
