@@ -35,5 +35,5 @@ pip install -r requirements.txt
 python your_script_name.py
 ```
 
-##📊 Outputs
+## 📊 Outputs
 When the script is executed, the terminal will display a step-by-step breakdown of the statistical test results, confidence intervals, and a detailed list of any detected anomalies. Additionally, a Q-Q Plot figure will pop up on your screen, allowing you to visually inspect the normality of the sensor data.
