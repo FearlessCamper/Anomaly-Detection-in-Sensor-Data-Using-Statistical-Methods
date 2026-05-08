@@ -7,7 +7,7 @@ This project was developed to perform Exploratory Data Analysis (EDA) on an Air 
 Within the scope of the project, after cleaning the sensor errors (`-200` values), the analysis process was carried out through two different scenarios:
 
 1.  **Scenario 1 (Row Deletion - Dropna):** Rows containing missing data were completely removed from the dataset. While this method results in data loss, it preserves the natural distribution of the existing data.
-2.  **Scenario 2 (Mean Imputation):** Missing values were filled with the mean of their respective columns. This method maintains data integrity (sample size) but may artificially reduce statistical variance (standard deviation).
+2.  **Scenario 2 (Mean Imputation):** Missing values were filled with the mean of their respective columns. This method maintains data integrity but may artificially reduce statistical variance (standard deviation).
 
 The following analyses were performed for both scenarios:
 - **Normal Distribution Estimation:** Calculation of Mean ($\mu$) and Standard Deviation ($\sigma$).
@@ -39,11 +39,11 @@ To understand the raw structure of the data, the analysis process was supported 
 
 | Distribution Analysis | Relationship Analysis |
 | :--- | :--- |
-| ![Temperature Distribution](Ekran%20Alıntısı.PNG) | ![Temp vs Humidity Relationship](Ekran%20Alıntısı2.PNG) |
+| ![Temperature Distribution](temperature_distribution.png) | ![Temp vs Humidity Relationship](temperature_humidity_relationship.png) |
 
 | Outliers (Boxplot) | Correlation Heatmap |
 | :--- | :--- |
-| ![CO Outliers](Ekran%20Alıntısı3.PNG) | ![Heatmap](Ekran%20Alıntısı4.PNG) |
+| ![CO Outliers](co_outliers.png) | ![Heatmap](correlation_heatmap.png) |
 
 ---
 
@@ -51,7 +51,7 @@ To understand the raw structure of the data, the analysis process was supported 
 
 ### Normality and Q-Q Plot
 The conformity of the data to the normal distribution line was tested for both scenarios. The following plot illustrates the deviation in the tails of the distribution:
-![Q-Q Plot](Figure_2.png)
+![Q-Q Plot](qq_plot.png)
 
 ### Statistical Inference
 The analysis revealed that **filling missing data with the mean (Scenario 2)** artificially narrows the standard deviation and causes the data to "spike" at the center. This situation changes the anomaly detection thresholds, leading to different results. In classical statistical analysis, it is concluded that the **Scenario 1 (Deletion)** method is more reliable as it does not distort the underlying data distribution.
