@@ -147,7 +147,7 @@ print("5. ANOMALİ TESPİTİ (|Z| > 3)")
 print(f"Toplam tespit edilen anomali sayısı: {len(anomaliler)}")
 if len(anomaliler) > 0:
     print("Örnek Anomaliler:")
-    print(anomaliler[[secilen_kolon, 'Z_Skoru']].head())
+    print(anomaliler[[secilen_kolon, 'Z_Skoru']].head()) 
 print("\n")
 
 # ==========================================
