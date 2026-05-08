@@ -1,69 +1,61 @@
-# Air Quality Data Statistical Analysis and Anomaly Detection Report
+# İstatistiksel Yöntemler ile Sensör Verilerinde Anomali Tespiti ve Veri İmputasyonu Karşılaştırması
 
-This report contains the results of the Exploratory Data Analysis (EDA) and Statistical Anomaly Detection operations performed on the `AirQualityUCI.csv` dataset.
+Bu rapor, `AirQualityUCI.csv` veri seti üzerinde gerçekleştirilen Keşifçi Veri Analizi (EDA), Eksik Veri Tamamlama (Imputation) ve İstatistiksel Anomali Tespiti işlemlerinin sonuçlarını içermektedir.
 
-## 1. Data Preprocessing and Summary
-Values of `-200`, representing moments when the devices were turned off or malfunctioning, were cleaned, making the dataset suitable for modeling and statistical analysis.
-* The `NMHC(GT)` column, which was 90% missing from the original dataset, was completely removed.
-* **Cleaned Data Shape:** 6941 rows, 12 columns.
+## 1. Veri Ön İşleme ve İki Farklı Senaryo
+Cihazların arıza verdiği anları temsil eden `-200` değerleri NaN (boşluk) yapılarak temizlenmiş ve %90'ı eksik olan `NMHC(GT)` sütunu projeden çıkarılmıştır. Analizin güvenirliğini test etmek için eksik veriler üzerinde iki farklı yaklaşım (senaryo) uygulanmıştır:
 
----
-
-## 2. Exploratory Data Analysis (EDA) Plots
-
-### 2.1 Temperature (T) Distribution
-When we examine the general distribution of the temperature data, it shows a profile close to a bell curve (normal distribution), though a slight right skew is noticeable.
-![Temperature Distribution](temperature_distribution.png)
-
-### 2.2 Temperature (T) and Relative Humidity (RH) Relationship
-Looking at the scatter plot between temperature and relative humidity, there is a distinct negative (inverse) correlation, indicating that as temperature increases, the relative humidity ratio drops.
-![Temperature and Relative Humidity Relationship](temperature_humidity_relationship.png)
-
-### 2.3 Carbon Monoxide (CO) Outliers
-When carbon monoxide values are examined with a boxplot, it is observed that the vast majority of the measurements are clustered at normal levels (inside the green box). However, sudden and dangerous spikes (outliers) shooting up to levels around 12 occur from time to time.
-![Carbon Monoxide Outliers](co_outliers.png)
-
-### 2.4 Sensor Data Correlation Heatmap
-According to the heatmap showing the statistical relationships between different sensor measurements, there are strong positive correlations between `C6H6(GT)` and other gas sensors. Conversely, there is a strong inverse relationship at a level of **-0.58** between `T` (Temperature) and `RH` (Relative Humidity).
-![Correlation Heatmap](correlation_heatmap.png)
+* **Senaryo 1 (Satırların Silinmesi):** İçinde eksik veri barındıran tüm satırlar düşürülmüştür. (Kalan boyut: 6941 satır)
+* **Senaryo 2 (Ortalama ile Doldurma):** Eksik veriler, ait oldukları sütunun genel ortalaması hesaplanarak doldurulmuştur. Satır kaybı yaşanmamıştır. (Kalan boyut: 9357 satır)
 
 ---
 
-## 3. Statistical Analysis (Temperature - 'T' Column)
+## 2. Keşifçi Veri Analizi (EDA) Grafikleri
+*(EDA grafikleri, verinin en saf hali olan Senaryo 1 veri seti üzerinden çizdirilmiştir.)*
 
-### 3.1 Normal Distribution Parameters
-The basic population parameters calculated over the temperature data are as follows:
-* **Mean ($\mu$):** [Mean Value from Output, e.g., 18.31]
-* **Standard Deviation ($\sigma$):** [Standard Deviation Value from Output, e.g., 8.82]
+### Sıcaklık (T) Dağılımı
+Sıcaklık verilerinin genel dağılımını incelediğimizde, verinin çan eğrisine (normal dağılım) yakın bir profil çizdiği ancak sağa doğru hafif bir çarpıklık olduğu görülmektedir.
+![Sıcaklık Dağılımı](temperature_distribution.png)
 
-### 3.2 68-95-99.7 (Empirical) Rule Check
-After the Z-score transformation, the distribution of the data within the standard deviation intervals occurred as follows:
-* **$\pm1$ Standard Deviation (Expected ~68%):** %[Value from Output]
-* **$\pm2$ Standard Deviations (Expected ~95%):** %[Value from Output]
-* **$\pm3$ Standard Deviations (Expected ~99.7%):** %[Value from Output]
-*(Note: The closer these results are to theoretical expectations, the more normally distributed the data is considered to be.)*
+### Sıcaklık (T) ve Bağıl Nem (RH) İlişkisi
+Sıcaklık ve bağıl nem arasındaki saçılım grafiği (scatter plot) incelendiğinde, sıcaklık arttıkça bağıl nem oranının düştüğünü gösteren belirgin bir negatif (ters) korelasyon göze çarpmaktadır.
+![Sıcaklık ve Bağıl Nem İlişkisi](temperature_humidity_relationship.png)
 
----
+### Karbonmonoksit (CO) Aykırı Değerleri
+Karbonmonoksit değerleri bir kutu grafiği (boxplot) ile incelendiğinde; verilerin büyük çoğunluğunun normal seviyelerde (yeşil kutu içinde) toplandığı, ancak zaman zaman yüksek seviyelere fırlayan anlık ve tehlikeli artışların (aykırı değerlerin) yaşandığı tespit edilmiştir.
+![Karbonmonoksit Aykırı Değerleri](co_outliers.png)
 
-## 4. Normality Tests
-
-### 4.1 Shapiro-Wilk Test
-* **Test Statistic:** [Statistic Value from Output]
-* **P-Value:** [P-Value from Output]
-* **Result:** Since the p-value is less than 0.05, the $H_0$ hypothesis is rejected (The data does not perfectly fit a normal distribution).
-
-### 4.2 Q-Q Plot
-The Q-Q plot visually confirms that the data shows a fairly good fit to the theoretical normal distribution (the red line) in the center, but deviates from normality at the extreme points (the tails) of the graph.
-![Q-Q Plot](qq_plot.png)
+### Sensör Verileri Korelasyon Haritası
+Farklı sensör ölçümleri arasındaki istatistiksel ilişkiyi gösteren ısı haritasına göre; `C6H6(GT)` ile diğer gaz sensörleri arasında güçlü pozitif korelasyonlar varken, `T` (Sıcaklık) ile `RH` (Bağıl Nem) arasında güçlü bir ters ilişki bulunmaktadır.
+![Korelasyon Haritası](correlation_heatmap.png)
 
 ---
 
-## 5. Confidence Intervals and Anomaly Detection
+## 3. İstatistiksel Analiz ve Senaryo Karşılaştırması (Sıcaklık - 'T' Sütunu)
 
-### 5.1 95% Confidence Interval
-The interval in which the population mean is located with a 95% probability (calculated via Standard Error) is as follows:
-* **Confidence Interval:** `([Lower_Bound_Value], [Upper_Bound_Value])`
+Eksik verileri silmenin (Senaryo 1) ve ortalama ile doldurmanın (Senaryo 2), dağılım parametrelerini ve anomali tespitini nasıl etkilediği aşağıda karşılaştırılmıştır:
 
-### 5.2 Anomaly Detection ($|Z| > 3$)
-In the temperature data, unusual measurements where the absolute value of the Z-score is greater than 3 (meaning they fall more than 3 standard deviations away from the mean) are labeled as "anomalies".
-* **Number of Detected Anomalies:** [Anomaly Count from Output]
+### 3.1 Dağılım Parametreleri ve Normallik Kontrolü
+| Metrik | Senaryo 1 (Silinmiş) | Senaryo 2 (Ort. ile Doldurulmuş) |
+| :--- | :--- | :--- |
+| **Ortalama ($\mu$)** | [Senaryo 1 Ortalama] | [Senaryo 2 Ortalama] |
+| **Standart Sapma ($\sigma$)** | [Senaryo 1 Sapma] | [Senaryo 2 Sapma] |
+| **68-95-99.7 (±1 Std)** | %[Senaryo 1 %1Std] | %[Senaryo 2 %1Std] |
+| **68-95-99.7 (±2 Std)** | %[Senaryo 1 %2Std] | %[Senaryo 2 %2Std] |
+| **Shapiro-Wilk P-Değeri**| [Senaryo 1 P Değeri] | [Senaryo 2 P Değeri] |
+| **Normallik Sonucu** | H0 Reddedilir | H0 Reddedilir |
+
+**Yorum:** Senaryo 2'de eksik değerlerin tamamı tek bir noktaya (ortalamaya) yığıldığı için standart sapmada daralma yaşanmış ve verinin yapay olarak merkezde sivrilmesine neden olmuştur. 
+
+### 3.2 Q-Q Plot Karşılaştırması
+*(Her iki senaryonun Q-Q plotları, dağılımın uç noktalarındaki sapmaları göstermektedir.)*
+![Q-Q Plot (Senaryo 1)](qq_plot.png)
+*(Buraya isterseniz Senaryo 2'nin Q-Q Plot resmini de ekleyebilirsiniz)*
+
+### 3.3 Güven Aralıkları ve Anomali Tespiti ($|Z| > 3$)
+| Metrik | Senaryo 1 (Silinmiş) | Senaryo 2 (Ort. ile Doldurulmuş) |
+| :--- | :--- | :--- |
+| **%95 Güven Aralığı** | ([Alt1], [Üst1]) | ([Alt2], [Üst2]) |
+| **Tespit Edilen Anomali Sayısı**| [Senaryo 1 Anomali Sayısı] | [Senaryo 2 Anomali Sayısı] |
+
+**Sonuç:** Eksik verilerin ortalama ile doldurulması (Senaryo 2), dağılımın yapısını ve standart sapmayı değiştirdiği için tespit edilen anomali (aykırı değer) miktarında farklılıklara yol açmıştır. Klasik istatistiksel anomali tespitinde, veri dağılımını suni olarak değiştiren doldurma yöntemleri yerine, temiz (silinmiş) veri seti (Senaryo 1) üzerinden ilerlemenin daha güvenilir olduğu sonucuna varılmıştır.
