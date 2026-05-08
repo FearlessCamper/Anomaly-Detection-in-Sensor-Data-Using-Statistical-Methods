@@ -1,5 +1,5 @@
-pandas
-numpy
-scipy
-matplotlib
-seaborn
+pandas-veri manipülasyonu ve temizliği
+numpy-matematiksel ve vektörel işlemler
+scipy-istatistiksel algoritmalar ve p-değerleri
+matplotlib-veri görselleştirme
+seaborn-veri görselleştirme
